@@ -4,42 +4,64 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.netology.pages.DashBoardPage;
+
 import ru.netology.pages.LoginPage;
 import ru.netology.pages.VerificationPage;
 
 import static com.codeborne.selenide.Selenide.open;
-import static ru.netology.data.DataHelper.getAuthInfo;
+import static ru.netology.data.DataHelper.*;
 import static ru.netology.data.SQLHelper.*;
 
 public class Tests {
-    LoginPage loginPage = new LoginPage();
-    DashBoardPage dashBoardPage = new DashBoardPage();
-    VerificationPage verificationPage = new VerificationPage();
 
+
+    @BeforeEach
+    void setUp() {
+        open("http://localhost:9999", LoginPage.class);
+
+
+    }
 
     @AfterEach
-    void tearDown(){
-cleanCodes();
+    void tearDown() {
+        cleanCodes();
     }
 
     @AfterAll
-    static void tearDownAll(){
+    static void tearDownAll() {
         cleaner();
     }
 
-    @BeforeEach
-    void setUp(){
-        open("http://localhost:9999", LoginPage.class);
 
+    @Test
+    void successLogin() {
+        LoginPage loginPage = new LoginPage();
+        var user = getAuthInfo();
+
+
+        loginPage.validLogin(user);
+        VerificationPage verificationPage = new VerificationPage();
+        var code = getVerCode();
+
+        verificationPage.validCode(code);
     }
 
     @Test
-    void successLogin(){
+    void invalidLogin() {
+        LoginPage loginPage = new LoginPage();
+        var user = getRandomInfo();
+        loginPage.invalidLogin(user);
+    }
+
+    @Test
+    void invalidCode() {
+        LoginPage loginPage = new LoginPage();
         var user = getAuthInfo();
-        var code = getVerCode();
+
 
         loginPage.validLogin(user);
-        verificationPage.validCode(code);
+        VerificationPage verificationPage = new VerificationPage();
+        var code = getRandomCode();
+        verificationPage.invalidCode(code);
     }
 }

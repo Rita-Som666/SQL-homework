@@ -15,15 +15,27 @@ repositories {
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.7.0'
+
     testImplementation 'mysql:mysql-connector-java:8.0.22'
     testImplementation 'com.github.javafaker:javafaker:1.0.2'
     testImplementation 'commons-dbutils:commons-dbutils:1.7'
+    compileOnly 'org.projectlombok:lombok:1.18.32'
+    annotationProcessor 'org.projectlombok:lombok:1.18.32'
+
+
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
+    testImplementation 'org.junit.vintage:junit-vintage-engine:5.8.2'
+    // библиотека com.codeborne:selenide используется при построении проекта с использованием Selenide
     testImplementation 'com.codeborne:selenide:6.17.2'
+    testImplementation 'com.github.javafaker:javafaker:1.0.2'
+    // при реализации проекте с использованием Selenium вместо библиотеки com.codeborne:selenide подключаются
+    // org.seleniumhq.selenium:selenium-java и io.github.bonigarcia:webdrivermanager
+    // testImplementation 'org.seleniumhq.selenium:selenium-java:4.18.1'
+
     testImplementation 'io.github.bonigarcia:webdrivermanager:5.7.0'
     testImplementation 'org.slf4j:slf4j-simple:1.7.32'
     implementation 'ch.qos.logback:logback-classic:1.2.6'
-
+    //testImplementation 'com.codeborne:selenide:6.17.2'
 }
 
 test {

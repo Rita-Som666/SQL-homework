@@ -9,13 +9,15 @@ import lombok.Value;
 import java.util.Locale;
 
 public class DataHelper {
-    private DataHelper() {}
+    private DataHelper() {
+    }
+
     private static final Faker faker = new Faker(new Locale("en"));
 
     @Value
     public static class AuthInfo {
-         String login;
-         String password;
+        String login;
+        String password;
     }
 
     public static AuthInfo getAuthInfo() {
@@ -26,7 +28,7 @@ public class DataHelper {
         return new AuthInfo("petya", "123qwerty");
     }
 
-    public static AuthInfo getRandomInfo(){
+    public static AuthInfo getRandomInfo() {
         return new AuthInfo(faker.name().firstName(), faker.internet().password());
     }
 
@@ -34,14 +36,11 @@ public class DataHelper {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class VerificationCode {
-         String code;
+        String code;
     }
+    
 
-    public static String getVerificationCodeFor(AuthInfo authInfo) {
-        return SQLHelper.getVerCode();
-    }
-
-    public static String getRandomCode(AuthInfo authInfo){
+    public static String getRandomCode() {
         return faker.number().digits(5);
     }
 }
